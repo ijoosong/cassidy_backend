@@ -1,0 +1,18 @@
+<html>
+  <head>
+    {% if title %}
+    <title>{{ title }} - twitter stuff</title>
+    {% else %}
+    <title>Welcome to twitter stuff?</title>
+    {% endif %}
+  </head>
+  <body>
+    <div>
+      Tweeter stuff: <a href="/index/">Home</a>
+      <a href="/login/">Login</a>
+    </div>
+    <hr>
+    {% block content %}
+    {% endblock %}
+  </body>
+</html>
