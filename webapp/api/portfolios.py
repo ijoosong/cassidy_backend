@@ -1,7 +1,7 @@
 from flask import request, jsonify
 from flask.views import MethodView
 from webapp.model import Org, Portfolio
-#from webapp import rbac
+from webapp import rbac
 from webapp.model import db
 
 
