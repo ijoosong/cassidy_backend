@@ -11,7 +11,7 @@ class OrgPortfolios(MethodView):
     Get user portfolios given user.
     Post creates portfolios under given user.
     """
-    #decorators = [rbac.allow(['api'], ['GET', 'POST'])]
+    decorators = [rbac.allow(['api'], ['GET', 'POST'])]
 
     def get(self, org_id=None):
         """

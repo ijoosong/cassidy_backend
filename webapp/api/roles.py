@@ -11,7 +11,7 @@ class Roles(MethodView):
     Get /roles/: returns all role names and id's
     Get /roles/<role_id>: returns role name
     """
-    #decorators = [rbac.allow(['api'], ['GET', ])]
+    decorators = [rbac.allow(['api'], ['GET', ])]
 
     def get(self, role_id=None):
         if role_id is None:

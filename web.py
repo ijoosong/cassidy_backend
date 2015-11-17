@@ -14,7 +14,7 @@ def signal_handler(sig, frame):
 signal.signal(signal.SIGINT, signal_handler)
 
 if __name__ == '__main__':
-    # main bankchain app
+    # main cassidy app
     # debug=True will start two bm_threads
     application.run(debug=True, threaded=True, host='0.0.0.0')
 

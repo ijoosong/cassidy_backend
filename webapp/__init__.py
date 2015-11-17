@@ -47,7 +47,7 @@ admin.add_view(ModelView(Portfolio, db.session))
 # set custom server header
 @application.after_request
 def rem_serv_header(response):
-    response.headers['Server'] = "Bankchain"
+    response.headers['Server'] = "Cassidy"
     return response
 
 from webapp import auth
@@ -55,15 +55,15 @@ from webapp import auth
 # RBAC SETUP
 
 rbac = RBAC(application)
-"""
+
 rbac.set_role_model(Role)
 rbac.set_user_model(User)
 rbac.set_user_loader(get_current_user)
-"""
+
 
 # Create roles:
 try:
-    req_roles = ['all', 'search', 'user']
+    req_roles = ['all', 'search', 'user', 'api', 'orgs', 'porfolios', 'roles']
     roles = Role.query.all()
     for r in req_roles:
         if r not in [a.name for a in roles]:
@@ -90,9 +90,6 @@ except Exception as e:
 from api import api
 application.register_blueprint(api, url_prefix='/api/v1')
 docs = swagger(application)
-
-from webapp import middleware
-from webapp import website
 
 
 

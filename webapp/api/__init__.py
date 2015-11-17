@@ -55,6 +55,7 @@ register_sub_api(OrgPortfolios, 'orgPortfolios', '/orgs/<%s:%s>/portfolios/', pk
 register_api_get(Roles, 'roles', '/roles/', pk='role_id')
 register_api_get(Portfolios, 'portfolios', '/portfolios/', pk=None)
 
+
 @api.route('/docs')
 def documentation():
     return jsonify(swagger(api))

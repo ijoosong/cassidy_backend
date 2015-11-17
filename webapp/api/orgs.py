@@ -12,7 +12,7 @@ class Orgs(MethodView):
     Get orgs and shows organizations.
     Post creates orgs.
     """
-    #decorators = [rbac.allow(['api'], ['GET', 'POST', 'PUT'])]
+    decorators = [rbac.allow(['api'], ['GET', 'POST', 'PUT'])]
 
     def get(self, org_id=None):
         """
