@@ -48,19 +48,15 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=False)
     password = db.Column(db.String(80), nullable=False)
-    roles = db.relationship('Role',
-                            secondary=users_roles,
-                            backref=db.backref('roles', lazy='dynamic'))
-
-    org_id = db.Column(db.Integer, db.ForeignKey('org.id'))
-    org = db.relationship('Org', foreign_keys=org_id)
+    team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
+    team = db.relationship('Team', foreign_keys=team_id)
     secure_id = db.Column(db.String(80), nullable=True)
     first_name = db.Column(db.String(80))
     last_name = db.Column(db.String(80))
     user_guid = db.Column(UUIDType(binary=False), nullable=False, default=uuid.uuid4)
 
     def __init__(self, hash_id='', username='', email='', password='', secure_id=None, first_name='', last_name='',
-                 user_guid=None, org_id=None):
+                 user_guid=None, team_id=None):
         self.hash_id = hash_id
         self.username = username
         self.email = email
@@ -69,33 +65,16 @@ class User(db.Model):
         self.first_name = first_name
         self.last_name = last_name
         self.user_guid = user_guid
-        self.org_id = org_id
+        self.team_id = team_id
 
     def __repr__(self):
         return self.username
-
-    def add_role(self, role):
-        if role not in self.roles:
-            self.roles.append(role)
-
-    def add_roles(self, roles):
-        for role in roles:
-            self.add_role(role)
-
-    def del_role(self, role):
-        if role in self.roles:
-            self.roles.remove(role)
-
-    def get_roles(self):
-        for role in self.roles:
-            yield role
 
     def as_json(self):
         user_dict = {
             "id": self.id,
             "username": self.username,
             "user_guid": self.user_guid,
-            "org_id": self.org_id,
         }
         if self.email is not None:
             user_dict["email"] = self.email
@@ -103,6 +82,8 @@ class User(db.Model):
             user_dict["first_name"] = self.first_name
         if self.last_name is not None:
             user_dict["last_name"] = self.last_name
+        if self.team is not None:
+            user_dict["teams"] = [team for team in self.team]
         return user_dict
 
 
@@ -164,6 +145,28 @@ class Pub_Key(db.Model):
         if user_key is None:
             return None
         return user_key.user
+
+
+class Team(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=True, nullable=False)
+
+    def __init__(self, name=''):
+        self.name = name
+
+    def __repr__(self):
+        return self.name
+
+    @staticmethod
+    def get_by_name(name):
+        return Team.query.filter_by(name=name).first()
+
+    def as_json(self):
+        team_dict = {
+            'name': self.name,
+            'id': self.id
+        }
+        return team_dict
 
 
 class Role(db.Model, RoleMixin):

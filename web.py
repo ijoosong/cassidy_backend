@@ -18,3 +18,11 @@ if __name__ == '__main__':
     # debug=True will start two bm_threads
     application.run(debug=True, threaded=True, host='0.0.0.0')
 
+"""
+TODO:
+
+users can be part of teams
+users can create products
+products are also part of teams
+product has an arrangement
+"""

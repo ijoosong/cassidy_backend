@@ -19,4 +19,4 @@ rednose
 requests
 sqlalchemy
 sqlalchemy_utils
-celery
+
