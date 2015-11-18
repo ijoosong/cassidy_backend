@@ -48,7 +48,7 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=False)
     password = db.Column(db.String(80), nullable=False)
-    team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
+    team_id = db.Column(db.Integer, db.ForeignKey('team.id'), nullable=True)
     team = db.relationship('Team', foreign_keys=team_id)
     secure_id = db.Column(db.String(80), nullable=True)
     first_name = db.Column(db.String(80))

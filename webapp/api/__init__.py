@@ -4,6 +4,7 @@ from userAdmin import UserAdmin, UserNew2FA
 from roles import Roles, UserRoles
 from apikeys import Api_Keys
 from orgs import Orgs
+from teams import Teams
 from flask_swagger import swagger
 
 
@@ -48,6 +49,7 @@ register_api(UserAdmin, 'userAdmin', '/users/')
 register_api(UserNew2FA, 'userNew2FA', '/users/2fa/')
 register_api(Api_Keys, 'apikeys', '/apikeys/')
 register_api(Orgs, 'orgs', '/orgs/', pk='org_id')
+register_api(Teams, 'teams', '/teams/', pk='team_id')
 
 register_sub_api(UserRoles, 'userRoles', '/users/<%s:%s>/roles/', pk="user_id")
 register_sub_api(OrgPortfolios, 'orgPortfolios', '/orgs/<%s:%s>/portfolios/', pk="org_id")
