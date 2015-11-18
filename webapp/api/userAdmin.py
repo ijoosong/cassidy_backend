@@ -117,7 +117,6 @@ class UserAdmin(MethodView):
         un = request.json.get('username', 'guest')
         user = User.query.filter_by(username=un).first()
         pw = str(request.json.get('password', ''))
-        org_id = request.json.get('org_id')
         if user is not None:
             return jsonify(error='Username Taken'), 400
         if options.get('testEnabled', False):
@@ -130,15 +129,10 @@ class UserAdmin(MethodView):
         em = request.json.get('email', '')
         hash_id = hashlib.sha256(str(random.getrandbits(256))).hexdigest()
         user_guid = uuid.uuid4()
+        team_id = request.json.get('team_id')
 
         u = User(username=un, email=em, password=pw_hash, secure_id=None, first_name=fname, last_name=lname,
-                 hash_id=hash_id, user_guid=user_guid, org_id=org_id)
-        # add all role to any user
-        r_all = Role.query.filter_by(name='all').first()
-        r_user = Role.query.filter_by(name='user').first()
-        r_userAdmin = Role.query.filter_by(name='userAdmin').first()
-        r_mcs = Role.query.filter_by(name='mcs').first()
-        u.add_roles([r_all, r_user, r_userAdmin, r_mcs])
+                 hash_id=hash_id, user_guid=user_guid, team_id=team_id)
         db.session.add(u)
         db.session.commit()
 
